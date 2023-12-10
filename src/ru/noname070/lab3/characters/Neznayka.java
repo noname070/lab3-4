@@ -1,80 +1,44 @@
 package ru.noname070.lab3.characters;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 
-import ru.noname070.lab3.actions.StifleActions;
-import ru.noname070.lab3.location.Location;
-import ru.noname070.lab3.time.Time;
+import ru.noname070.lab3.locations.LocationImpl;
+import ru.noname070.lab3.stiffleActions.StiffleActions;
 
-public class Neznayka extends Character {
-    private Time lastTime;
-    private Time currentTime;
-    public boolean decideToLeave = false;
+public class Neznayka extends CharacterImpl {
+    private ArrayList<String> thoughts = new ArrayList<String>();
+    private int hungerScore = 100;
 
-    private ArrayList<String> thoughts = new ArrayList<String>()
-    {{ add("Воспоминание о Пончике"); add("Ракета"); add("Луна"); add("Скоро поспеет помощь"); }};
+    public Neznayka(String name, LocationImpl location) {
+        super(name, location);
+        thoughts.addAll(Arrays.asList(
+        "Воспоминание о Пончике", "Ракета", "Луна", "Скоро поспеет помощь"));
 
-    public void updateTime(Time updatedCurrentTime) throws InterruptedException {
-        if (lastTime == null) {
-            lastTime = updatedCurrentTime;
-            currentTime = updatedCurrentTime;
-        }
-        else if (Time.getTimeDelta(lastTime, updatedCurrentTime) == 3500) {
-            lastTime = currentTime;
-            currentTime = updatedCurrentTime;
-            hungerStiffle();
-        }
-        else if (Time.getTimeDelta(lastTime, updatedCurrentTime) == 2000) {
-            lastTime = currentTime;
-            currentTime = updatedCurrentTime;
-        }
-        
-        this.currentTime = updatedCurrentTime;
-    }
-    
-    public void searchCharacterAtLocation(Character c, Location l) {
-        if (l.getAllVisitors().contains(c)) {
-            decideToLeave = true;
-        } else {
-            decideToLeave = false;
-        }
     }
 
-    public boolean getDecisionToLeave() {
-        return decideToLeave;
+    public String divertHunger() {
+        if (hungerScore > 10) {
+            hungerScore -= 1;
+            StiffleActions stiffleActionToDo = StiffleActions.getRandomAction();
+            String result = StiffleActions.doAction(stiffleActionToDo);
+            return result;
+        } else {return "Character too hungry";}
     }
-    
-    public void hungerStiffle () throws InterruptedException {
-        hunger = 40;
+
+    public String goLookingFor(CharacterImpl targetCharacter, LocationImpl targetLocation) {
+        joinLocation(targetLocation);
+        if (targetLocation.isCharacterInLocation(targetCharacter)) {
+            return "ура победа " + targetCharacter.getName() + " нашелся";
+        } else { return "это не " + targetCharacter.getName(); }
+    }
+
+    public void hungerStiffle() {
+        hungerScore = 40;
         thoughts.clear();
-        thoughts.add("Куда же запропастился Козлик?");
-        thoughts.add("Почему он не возвращается?");
+        thoughts.addAll(Arrays.asList("Куда же запропастился Козлик?", "Почему он не возвращается?"));
 
-        System.out.println("Neznaka`s thoughts: " + thoughts.toString());
 
-        for (int i=15; i > 0; i--) {
-            if (hunger-- < 30) {
-                callbackLowHunger();
-            }
-            TimeUnit.SECONDS.sleep((long) .2);
-            
-        }
     }
-
-    @Override
-    protected void callbackLowPatience() {
-        System.out.println("Neznayka has low parience");
-    }
-
-    @Override
-    protected void callbackLowHunger() {
-        StifleActions randomAction = StifleActions.getRandomAction();
-        patience-=15;
-        System.out.println("Neznayka do " + randomAction);
-        if (patience < 30) {
-            callbackLowPatience();
-        }
-    }
-
+    
 }
