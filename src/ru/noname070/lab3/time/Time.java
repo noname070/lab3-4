@@ -20,5 +20,9 @@ public enum Time {
         return value;
     }
 
+    public boolean equals(Time obj) {
+        return obj.getValue() == this.getValue();
+    }
+
 
 }

@@ -24,7 +24,7 @@ public enum StiffleActions {
         }
         return "";
     }
-    
+
     private static Random rnd = new Random();
     public static StiffleActions getRandomAction()  {
         StiffleActions[] actions = values();
