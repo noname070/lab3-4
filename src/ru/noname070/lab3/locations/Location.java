@@ -11,4 +11,5 @@ public interface Location {
     public void joinCharacter(CharacterImpl c);
     public void leaveCharacter(CharacterImpl c);
     public ArrayList<CharacterImpl> getAllVisitors();
+    
 }

@@ -18,12 +18,9 @@ public class Story {
 
         neznaykaCharacter.hungerStiffle();
 
-        while (true) {
-            currentTime += 100;
-            if (currentTime < Time.DAYEND.getValue()) {
-                    neznaykaCharacter.divertHunger();
-            } else {break;}
-        }
+        for (; currentTime > Time.DAYEND.getValue(); currentTime += 100 ) {
+            neznaykaCharacter.divertHunger();
+        } 
 
         if (Time.DAYEND.getValue() == currentTime ) {
             neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation);

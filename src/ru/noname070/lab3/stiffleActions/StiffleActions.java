@@ -6,8 +6,6 @@ public enum StiffleActions {
     SONGS,
     PUZZLES,
     PROVERBS;
-
-    private static Random rnd = new Random();
     
     public static String doAction(StiffleActions action) {
         switch (action) {
@@ -26,7 +24,8 @@ public enum StiffleActions {
         }
         return "";
     }
-
+    
+    private static Random rnd = new Random();
     public static StiffleActions getRandomAction()  {
         StiffleActions[] actions = values();
         return actions[rnd.nextInt(actions.length)];
