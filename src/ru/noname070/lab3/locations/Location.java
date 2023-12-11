@@ -1,15 +1,17 @@
 package ru.noname070.lab3.locations;
 
-import java.util.ArrayList;
+import ru.noname070.lab3.entity.Entity;
 
-import ru.noname070.lab3.characters.CharacterImpl;
+public class Location extends Entity implements ILocation {
+    private String name;
 
-public interface Location {
+    public Location(String name) {
+        super();
+        this.name = name;
+    }
 
-    public String getName();
-    public boolean isCharacterInLocation(CharacterImpl c);
-    public void joinCharacter(CharacterImpl c);
-    public void leaveCharacter(CharacterImpl c);
-    public ArrayList<CharacterImpl> getAllVisitors();
-    
-}
+    public String getName() {
+        return name;
+    }
+
+} 
