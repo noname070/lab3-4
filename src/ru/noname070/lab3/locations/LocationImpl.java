@@ -2,8 +2,8 @@ package ru.noname070.lab3.locations;
 
 import java.util.ArrayList;
 
-import ru.noname070.lab3.Entity;
 import ru.noname070.lab3.characters.CharacterImpl;
+import ru.noname070.lab3.entity.Entity;
 
 public class LocationImpl extends Entity implements Location{
     private String name;
@@ -15,6 +15,10 @@ public class LocationImpl extends Entity implements Location{
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<CharacterImpl> getAllVisitors() {
+        return visitors;
     }
 
     public boolean isCharacterInLocation(CharacterImpl c) {

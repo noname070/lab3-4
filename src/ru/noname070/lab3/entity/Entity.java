@@ -1,4 +1,4 @@
-package ru.noname070.lab3;
+package ru.noname070.lab3.entity;
 
 import java.lang.reflect.Method;
 import java.util.Objects;

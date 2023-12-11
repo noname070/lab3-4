@@ -14,7 +14,6 @@ public class Neznayka extends CharacterImpl {
         super(name, location);
         thoughts.addAll(Arrays.asList(
         "Воспоминание о Пончике", "Ракета", "Луна", "Скоро поспеет помощь"));
-
     }
 
     public String divertHunger() {
@@ -23,14 +22,17 @@ public class Neznayka extends CharacterImpl {
             StiffleActions stiffleActionToDo = StiffleActions.getRandomAction();
             String result = StiffleActions.doAction(stiffleActionToDo);
             return result;
-        } else {return "Character too hungry";}
+        } else {return "Character " + this.getName() +  " too hungry";}
     }
 
     public String goLookingFor(CharacterImpl targetCharacter, LocationImpl targetLocation) {
         joinLocation(targetLocation);
-        if (targetLocation.isCharacterInLocation(targetCharacter)) {
-            return "ура победа " + targetCharacter.getName() + " нашелся";
-        } else { return "это не " + targetCharacter.getName(); }
+        for (CharacterImpl suspectCharacter : targetLocation.getAllVisitors()) {
+            if (suspectCharacter.equals(targetCharacter)) {
+                return "wow! it`s a " + targetCharacter.getName() + " in " + targetLocation.getName();
+            } else { return "oh noo it`s a " + suspectCharacter.getName() + " in " + targetLocation.getName();}
+        }
+        return null; // for vscode
     }
 
     public void hungerStiffle() {

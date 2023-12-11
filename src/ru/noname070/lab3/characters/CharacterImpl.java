@@ -1,6 +1,6 @@
 package ru.noname070.lab3.characters;
 
-import ru.noname070.lab3.Entity;
+import ru.noname070.lab3.entity.Entity;
 import ru.noname070.lab3.locations.LocationImpl;
 
 public class CharacterImpl extends Entity implements Character {
