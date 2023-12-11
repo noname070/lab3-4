@@ -27,6 +27,7 @@ public class Character extends Entity implements ICharacter {
         this.currnetLocation = location;
 
         this.thoughts = thoughts;
+        System.out.println(thoughts);
 
     }
 
@@ -56,8 +57,8 @@ public class Character extends Entity implements ICharacter {
         joinLocation(targetLocation);
         for (Character suspectCharacter : targetLocation.getAllVisitors()) {
             if (suspectCharacter.equals(targetCharacter)) {
-                return "wow! it`s a " + targetCharacter.getName() + " in " + targetLocation.getName();
-            } else { return "oh noo it`s a " + suspectCharacter.getName() + " in " + targetLocation.getName();}
+                return "wow! " + this.getName()  + " succumbed that it`s a " + targetCharacter.getName() + " in " + targetLocation.getName();
+            } else { return "oh noo "+ this.getName() + " succumbed that it`s a " + suspectCharacter.getName() + " in " + targetLocation.getName();}
         }
         return null; // for vscode
     }
@@ -67,14 +68,16 @@ public class Character extends Entity implements ICharacter {
             hungerScore -= 1;
             StiffleActions stiffleActionToDo = StiffleActions.getRandomAction();
             String result = StiffleActions.doAction(stiffleActionToDo);
-            return result;
+            return this.getName() + " " + result;
         } else {return "Character " + this.getName() +  " too hungry";}
+
     }
     
-    public void hungerStiffle(ArrayList<String> newThoughts) {
+    public String hungerStiffle(ArrayList<String> newThoughts) {
         hungerScore = 40;
         thoughts.clear();
         thoughts = newThoughts;
+        return this.getName() + " now starving by hunger\n"+newThoughts.toString();
     }
 
 }

@@ -21,10 +21,12 @@ public class СharacterLocatableImpl extends Location implements IСharacterLoca
 
     public void joinCharacter(Character c) {
         visitors.add(c);
+        System.out.println("Now " + c.getName() + " joint to " + this.getName());
     }
 
     public void leaveCharacter(Character c) {
         visitors.remove(c);
+        System.out.println(c.getName() + " leaves from " + this.getName());
     }
 
 }

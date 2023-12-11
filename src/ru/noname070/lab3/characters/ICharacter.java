@@ -12,6 +12,6 @@ public interface ICharacter {
     public ArrayList<String> getThoughts();
     public String goLookingFor(Character targetCharacter, СharacterLocatableImpl targetLocation);
     public String divertHunger();
-    public void hungerStiffle(ArrayList<String> newThoughts);
+    public String hungerStiffle(ArrayList<String> newThoughts);
 
 }
