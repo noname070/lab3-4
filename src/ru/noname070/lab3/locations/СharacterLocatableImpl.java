@@ -26,7 +26,7 @@ public class СharacterLocatableImpl extends Location implements IСharacterLoca
 
     public void leaveCharacter(Character c) {
         visitors.remove(c);
-        System.out.println(c.getName() + " leaves from " + this.getName());
+        System.out.println(c.getName() + " leaves from d" + this.getName());
     }
 
 }

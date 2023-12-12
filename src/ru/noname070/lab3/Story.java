@@ -33,6 +33,17 @@ public class Story {
             System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
         }
 
+        // part 2
+
+        if (!shortyCharacterImpl.goLookingFor(neznaykaCharacter)) {
+            System.exit(-1); // xd
+        }
+
+        
+
         System.out.println("[STORYEND]");
+
+        System.out.println(neznaykaCharacter.toString());
+        System.out.println("Hashcode " + neznaykaCharacter.hashCode());
     }
 }

@@ -2,6 +2,8 @@ package ru.noname070.lab3.characters;
 
 import java.util.ArrayList;
 
+import javax.sound.midi.Track;
+
 import ru.noname070.lab3.entity.Entity;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.stiffleActions.StiffleActions;
@@ -62,6 +64,16 @@ public class Character extends Entity implements ICharacter {
         }
         return null; // for vscode
     }
+
+    public Boolean goLookingFor(Character targetCharacter) {
+        for (Character suspectCharacter : targetCharacter.currnetLocation.getAllVisitors()) {
+            if (suspectCharacter.equals(targetCharacter)) {
+                return true;
+            } else { return false;}
+        }
+        return null; // for vscode
+    }
+
 
     public String divertHunger() {
         if (hungerScore > 10) {
