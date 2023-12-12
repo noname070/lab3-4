@@ -13,7 +13,7 @@ public class Location extends Entity implements ILocation {
     public String getName() {
         return name;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         return this.getClass() == obj.getClass() ? this.name == ((Location)obj).name : false;

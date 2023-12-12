@@ -1,8 +1,10 @@
 package ru.noname070.lab3.entity;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Entity {
 
@@ -16,7 +18,9 @@ public abstract class Entity {
     @Override
     public int hashCode() {
         String F = "";
-         try {
+
+        try {
+            
             for (Field field : this.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 Object value;
@@ -34,23 +38,14 @@ public abstract class Entity {
 
     @Override
     public String toString() {
-        String M = "";
-        String F = "";
-        Method[] methods = this.getClass().getMethods();
-        for (Method method : methods) {M += method.getName().toString() + ";";}
-        try {
-            for (Field field : this.getClass().getDeclaredFields()) {
-                field.setAccessible(true);
-                Object value;
-                    value = field.get(this);
-                if (value != null) {
-                    F += field.getName() + "=" + value + ";";
-                }
-            }
-        } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
-            } 
-        return "{"+ this.getClass() + "} methods: " + M + " fields: " + F;
+
+        String M = Arrays.stream( this.getClass().getMethods() )
+                        .map( method -> method.getName().toString() )
+                        .collect(Collectors.joining("; "));
+
+        int idx = this.getClass().getName().lastIndexOf(".");
+        return this.getClass().getName().substring(idx+1) + " methods: " + M + ", fields: NaN";
+
     }
 
 }

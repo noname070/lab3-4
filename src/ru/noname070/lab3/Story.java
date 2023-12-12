@@ -34,5 +34,8 @@ public class Story {
         }
 
         System.out.println("[STORYEND]");
+
+        System.out.println(neznaykaCharacter.toString());
+        System.out.println("Hashcode " + neznaykaCharacter.hashCode());
     }
 }
