@@ -1,10 +1,11 @@
 package ru.noname070.lab3.entity;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public abstract class Entity {
 
@@ -36,16 +37,36 @@ public abstract class Entity {
         return Objects.hash( F.hashCode() * Objects.hash(this.getClass()) );
     }
 
+    private static String prepareMethod(Method method) {
+        String name = method.getName().toString();
+        String params = "";
+        for (Class<?> p : method.getParameterTypes()) {
+            params += p.getCanonicalName() + ", ";
+        }
+        String except = "";
+        for (Class<?> e : method.getExceptionTypes()) {
+            except += e.getName();
+        }
+        String ret = method.getReturnType().toString();
+        
+
+        return name + "("+params+") " + (except.length() == 0 ? "" : "throws " + except + " " ) + "-> " + ret   ;
+    }
+
     @Override
     public String toString() {
 
+
         String M = Arrays.stream( this.getClass().getMethods() )
-                        .map( method -> method.getName().toString() )
-                        .collect(Collectors.joining("; "));
+                        // .map( method -> method.getName().toString() )
+                        .map( method -> Entity.prepareMethod(method))
+                        .collect(Collectors.joining(";\n"));
+        
 
         int idx = this.getClass().getName().lastIndexOf(".");
         return this.getClass().getName().substring(idx+1) + " methods: " + M + ", fields: NaN";
 
     }
+
 
 }
