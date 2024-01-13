@@ -2,9 +2,8 @@ package ru.noname070.lab3.characters;
 
 import java.util.ArrayList;
 
-import javax.sound.midi.Track;
-
 import ru.noname070.lab3.entity.Entity;
+import ru.noname070.lab3.locations.LocatableHistory;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.stiffleActions.StiffleActions;
 
@@ -36,6 +35,10 @@ public class Character extends Entity implements ICharacter {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -91,5 +94,19 @@ public class Character extends Entity implements ICharacter {
         thoughts = newThoughts;
         return this.getName() + " now starving by hunger\n"+newThoughts.toString();
     }
+
+    public ArrayList<LocatableHistory> getLocationHistory(Character c) {
+        ArrayList<LocatableHistory> currentCharacterHistory = new ArrayList<LocatableHistory>();
+        for (LocatableHistory r : c.currnetLocation.getHistory()) {
+            if (r.character() == c ) {
+                currentCharacterHistory.add(r);
+            }
+        }
+
+        return currentCharacterHistory;
+
+    }
+
+
 
 }

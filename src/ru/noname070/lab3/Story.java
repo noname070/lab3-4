@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import ru.noname070.lab3.characters.Character;
+import ru.noname070.lab3.locations.LocatableHistory;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.time.Time;
 
@@ -39,6 +40,9 @@ public class Story {
             System.exit(-1); // xd
         }
 
+
+        //dialog
+        ArrayList<LocatableHistory> neznaykaLocationHistory = shortyCharacterImpl.getLocationHistory(neznaykaCharacter);
         
 
         System.out.println("[STORYEND]");
