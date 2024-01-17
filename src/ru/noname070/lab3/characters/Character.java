@@ -6,31 +6,50 @@ import ru.noname070.lab3.entity.Entity;
 import ru.noname070.lab3.locations.LocatableHistory;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.stiffleActions.StiffleActions;
+import ru.noname070.lab3.time.CurrentTimeContainer;
 
-public class Character extends Entity implements ICharacter {
+public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     private String name;
     private СharacterLocatableImpl currnetLocation;
     private int hungerScore; 
     private ArrayList<String> thoughts = new ArrayList<String>();
+    private CurrentTimeContainer currentTime;
 
-    public Character(String name, СharacterLocatableImpl location) {
+    class CharacterTrash {
+        enum Trash {
+            RUBBER_PILLOW,
+            OLD_MATTRESS,
+            CLOTH
+        }
+        public CharacterTrash(String name) {
+            
+        }
+    }
+
+    public Character(String name, СharacterLocatableImpl location, CurrentTimeContainer currentTime) {
         this.name = name;
         this.hungerScore = 100;
         location.joinCharacter(this);
         this.currnetLocation = location;
+        this.currentTime = currentTime;
 
     }
 
-    public Character(String name, СharacterLocatableImpl location, ArrayList<String> thoughts) {
+    public Character(String name, СharacterLocatableImpl location, ArrayList<String> thoughts, CurrentTimeContainer currentTime) {
         this.name = name;
         this.hungerScore = 100;
         location.joinCharacter(this);
         this.currnetLocation = location;
+        this.currentTime = currentTime;
 
         this.thoughts = thoughts;
         System.out.println(thoughts);
 
     }
+
+    // public Character(СharacterLocatableImpl location, CurrentTimeContainer currentTime, String...names) {
+        
+    // }
 
     @Override
     public String getName() {
@@ -79,7 +98,7 @@ public class Character extends Entity implements ICharacter {
 
 
     public String divertHunger() {
-        if (hungerScore > 10) {
+        if (hungerScore > 10 && hungerScore < 50) {
             hungerScore -= 1;
             StiffleActions stiffleActionToDo = StiffleActions.getRandomAction();
             String result = StiffleActions.doAction(stiffleActionToDo);
@@ -105,6 +124,11 @@ public class Character extends Entity implements ICharacter {
 
         return currentCharacterHistory;
 
+    }
+
+    @Override
+    public void timeUpdater(CurrentTimeContainer currentTime) {
+        System.out.println(divertHunger());
     }
 
 

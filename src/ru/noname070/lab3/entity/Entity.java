@@ -6,7 +6,14 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import ru.noname070.lab3.time.CurrentTimeContainer;
+
 public abstract class Entity {
+
+    public static abstract class TimeSlaveEntity extends Entity {
+        abstract public void timeUpdater(CurrentTimeContainer currentTime);
+        
+    }
 
     @Override
     public boolean equals(Object obj) {
