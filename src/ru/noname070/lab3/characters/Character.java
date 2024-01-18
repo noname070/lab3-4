@@ -2,6 +2,7 @@ package ru.noname070.lab3.characters;
 
 import java.util.ArrayList;
 
+
 import ru.noname070.lab3.entity.Entity;
 import ru.noname070.lab3.locations.LocatableHistory;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
@@ -15,16 +16,49 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     private ArrayList<String> thoughts = new ArrayList<String>();
     private CurrentTimeContainer currentTime;
 
-    class CharacterTrash {
-        enum Trash {
-            RUBBER_PILLOW,
-            OLD_MATTRESS,
-            CLOTH
-        }
-        public CharacterTrash(String name) {
+    public class TrashChest extends Entity {
+        public static enum Trash {
+            RUBBER_PILLOW("РЕЗИНОВЫЕ ПОДУШЕЧКИ"),
+            OLD_MATTRESS("СТАРЫЕ ДВА МАТРАСИКА"),
+            CLOTH("ПАКЕТ РВАНОЙ ОДЕЖДЫ");
             
+            public String x;
+            Trash(String x) {
+                this.x = x;
+            }
+        }
+
+        String name;
+        Trash trashType;
+        public TrashChest(Trash trashType) {
+            this.trashType = trashType;
+            this.name = trashType.x;
+        }
+
+        public String getName() {
+            return name;
+        }
+ 
+        public String makeSleepingPlaceFrom() {
+            switch (this.trashType) {
+                case RUBBER_PILLOW:
+                    
+                    return "blowing rubber pads";
+
+                case OLD_MATTRESS:
+
+                    return "covered himself with two mattresses";
+
+                case CLOTH:
+
+                    return "wrapped himself in stuff like he had a cool sleeping bag";
+            
+                default:
+                    return "made a decent sleeping space out of this crap";
+            }
         }
     }
+
 
     public Character(String name, СharacterLocatableImpl location, CurrentTimeContainer currentTime) {
         this.name = name;
@@ -108,29 +142,30 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     }
     
     public String hungerStiffle(ArrayList<String> newThoughts) {
-        hungerScore = 40;
+        hungerScore = 49;
         thoughts.clear();
         thoughts = newThoughts;
         return this.getName() + " now starving by hunger\n"+newThoughts.toString();
     }
 
-    public ArrayList<LocatableHistory> getLocationHistory(Character c) {
-        ArrayList<LocatableHistory> currentCharacterHistory = new ArrayList<LocatableHistory>();
-        for (LocatableHistory r : c.currnetLocation.getHistory()) {
-            if (r.character() == c ) {
-                currentCharacterHistory.add(r);
-            }
-        }
+    // public ArrayList<LocatableHistory> getLocationHistory(Character c) {
+    //     ArrayList<LocatableHistory> currentCharacterHistory = new ArrayList<LocatableHistory>();
+    //     for (LocatableHistory r : c.currnetLocation.getHistory()) {
+    //         if (r.character() == c ) {
+    //             currentCharacterHistory.add(r);
+    //         }
+    //     }
 
-        return currentCharacterHistory;
+    //     return currentCharacterHistory;
 
-    }
+    // }
 
     @Override
     public void timeUpdater(CurrentTimeContainer currentTime) {
-        System.out.println(divertHunger());
+        if (hungerScore < 50) {
+            System.out.println(divertHunger());
+        }
     }
-
 
 
 }

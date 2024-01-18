@@ -11,6 +11,12 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
     private CurrentTimeContainer currentTime;
     private double visibility = 1.0;
     private double visibility_bias = 0;
+    private double rayTracingBias = 0;
+
+    public void setRayTracingBias(double v) {
+        rayTracingBias = v;
+    }
+
 
     public Location(String name, CurrentTimeContainer currentTime) {
         this.name = name;
@@ -27,10 +33,22 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
         return name;
     }
 
+    public double getVisibility() {return visibility;}
+
+
     public void setBias(double new_bias) {
         this.visibility_bias = new_bias;
     }
-    
+
+    public void setVisibility(double new_visibility) {
+        this.visibility = new_visibility;
+    }
+
+    Location rayTraycingLocation;
+    public void  setRayTraycing(Location targetLocation) {
+        rayTraycingLocation = targetLocation;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return this.getClass() == obj.getClass() ? this.name == ((Location)obj).name : false;
@@ -39,7 +57,15 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
     @Override
     public void timeUpdater(CurrentTimeContainer currentTime) {
         this.currentTime = currentTime;
-        this.visibility = Math.min(1, -1 * Math.tanh(currentTime.getCurrentTime()/(24000) * 3.5 - 3) * .5 + .6) + visibility_bias;
+        this.visibility = Math.min(1, -1 * Math.tanh(
+            currentTime.getCurrentTime()/(24000) * 3.5 - 3) * .5 + .6
+        ) + visibility_bias + rayTracingBias;
+        this.rayTracingBias = 0;
+
+        if (rayTraycingLocation != null) {
+            rayTraycingLocation.setRayTracingBias(this.visibility * .4);
+        }
+
     }
 
 } 
