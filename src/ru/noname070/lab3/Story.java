@@ -3,8 +3,6 @@ package ru.noname070.lab3;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.sound.midi.Track;
-
 import ru.noname070.lab3.characters.Character;
 import ru.noname070.lab3.entity.Entity;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
@@ -49,15 +47,11 @@ public class Story {
             System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
         }
 
-        // dialog
-
+        // dialog TODO
 
         currentTime.setCurrentTime(Time.DAYEND.getValue());
         bridgeLocation.setBias(.15); // lights on
 
-
-        // Character millionchikCharacter = new Character("Миллиончик", shelterLocation, currentTime);
-        // Character puzirCharacter = new Character("Пузыр", shelterLocation, currentTime);
 
         class StoryAboutShorties extends Entity.TimeSlaveEntity {
             String name;
@@ -96,7 +90,7 @@ public class Story {
             time.timeStep();
         }
 
-        System.out.println("\n\n\n");
+        System.out.println("\n");
         
     
         System.out.println("[STORYEND]");

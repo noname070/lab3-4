@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 
 import ru.noname070.lab3.entity.Entity;
-import ru.noname070.lab3.locations.LocatableHistory;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.stiffleActions.StiffleActions;
 import ru.noname070.lab3.time.CurrentTimeContainer;
