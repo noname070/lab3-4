@@ -12,6 +12,7 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
     private double visibility_bias = 0;
     private double rayTracingBias = 0;
 
+    @Override
     public void setRayTracingBias(double v) {
         rayTracingBias = v;
     }
@@ -28,22 +29,27 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
         this.visibility_bias = visibility_bias;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public double getVisibility() {return visibility;}
 
 
+    @Override
     public void setBias(double new_bias) {
         this.visibility_bias = new_bias;
     }
 
+    @Override
     public void setVisibility(double new_visibility) {
         this.visibility = new_visibility;
     }
 
-    Location rayTraycingLocation;
+    ILocation rayTraycingLocation;
+    @Override
     public void  setRayTraycing(Location targetLocation) {
         rayTraycingLocation = targetLocation;
     }
@@ -53,7 +59,6 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
         return this.getClass() == obj.getClass() ? this.name == ((Location)obj).name : false;
     }
 
-    @Override
     public void timeUpdater(CurrentTimeContainer currentTime) {
         this.currentTime = currentTime;
         this.visibility = Math.min(1, -1 * Math.tanh(
@@ -66,5 +71,7 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
         }
 
     }
+
+
 
 } 

@@ -3,7 +3,18 @@ package ru.noname070.lab3.locations;
 
 public interface ILocation {
 
-    public String getName();
-    // any objects
+    void setRayTracingBias(double v);
+
+    String getName();
+
+    double getVisibility();
+
+    void setBias(double new_bias);
+
+    void setVisibility(double new_visibility);
+
+    void setRayTraycing(Location targetLocation);
+
+    boolean equals(Object obj);
 
 }

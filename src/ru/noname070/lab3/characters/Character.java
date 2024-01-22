@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 import ru.noname070.lab3.entity.Entity;
+import ru.noname070.lab3.exceptions.CharacterMovementException;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.stiffleActions.StiffleActions;
 import ru.noname070.lab3.time.CurrentTimeContainer;
@@ -59,7 +60,7 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     }
 
 
-    public Character(String name, СharacterLocatableImpl location, CurrentTimeContainer currentTime) {
+    public Character(String name, СharacterLocatableImpl location, CurrentTimeContainer currentTime) throws CharacterMovementException {
         this.name = name;
         this.hungerScore = 100;
         location.joinCharacter(this);
@@ -68,7 +69,7 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
 
     }
 
-    public Character(String name, СharacterLocatableImpl location, ArrayList<String> thoughts, CurrentTimeContainer currentTime) {
+    public Character(String name, СharacterLocatableImpl location, ArrayList<String> thoughts, CurrentTimeContainer currentTime) throws CharacterMovementException {
         this.name = name;
         this.hungerScore = 100;
         location.joinCharacter(this);
@@ -89,12 +90,13 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         return this.name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
     @Override
-    public void joinLocation(СharacterLocatableImpl l) {
+    public void joinLocation(СharacterLocatableImpl l) throws CharacterMovementException {
         currnetLocation.leaveCharacter(this);
         currnetLocation = l;
         l.joinCharacter(this);
@@ -105,12 +107,14 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         return this.currnetLocation;
     }
 
+    @Override
     public ArrayList<String> getThoughts () {
         return thoughts;
     }
 
 
-    public String goLookingFor(Character targetCharacter, СharacterLocatableImpl targetLocation) {
+    @Override
+    public String goLookingFor(Character targetCharacter, СharacterLocatableImpl targetLocation) throws CharacterMovementException {
         joinLocation(targetLocation);
         for (Character suspectCharacter : targetLocation.getAllVisitors()) {
             if (suspectCharacter.equals(targetCharacter)) {
@@ -120,6 +124,7 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         return null; // for vscode
     }
 
+    @Override
     public Boolean goLookingFor(Character targetCharacter) {
         for (Character suspectCharacter : targetCharacter.currnetLocation.getAllVisitors()) {
             if (suspectCharacter.equals(targetCharacter)) {
@@ -130,6 +135,7 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     }
 
 
+    @Override
     public String divertHunger() {
         if (hungerScore > 10 && hungerScore < 50) {
             hungerScore -= 1;
@@ -140,8 +146,9 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
 
     }
     
+    @Override
     public String hungerStiffle(ArrayList<String> newThoughts) {
-        hungerScore = 49;
+        hungerScore = 40;
         thoughts.clear();
         thoughts = newThoughts;
         return this.getName() + " now starving by hunger\n"+newThoughts.toString();

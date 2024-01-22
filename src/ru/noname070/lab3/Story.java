@@ -5,13 +5,14 @@ import java.util.Arrays;
 
 import ru.noname070.lab3.characters.Character;
 import ru.noname070.lab3.entity.Entity;
+import ru.noname070.lab3.exceptions.CharacterMovementException;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.time.CurrentTimeContainer;
 import ru.noname070.lab3.time.GlobalTimeUpdater;
 import ru.noname070.lab3.time.Time;
 
 public class Story {
-    public static void play() {
+    public static void play() throws CharacterMovementException {
         CurrentTimeContainer currentTime = new CurrentTimeContainer(Time.MORNING.getValue());
         System.out.println("Now it`s " + currentTime.toString());
 
@@ -46,8 +47,6 @@ public class Story {
         if (Time.EVENING.getValue() == currentTime.getCurrentTime() ) {
             System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
         }
-
-        // dialog TODO
 
         currentTime.setCurrentTime(Time.DAYEND.getValue());
         bridgeLocation.setBias(.15); // lights on
