@@ -46,8 +46,8 @@ public class Story {
 
         if (Time.EVENING.getValue() == currentTime.getCurrentTime() ) {
             System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
+        
         }
-
         currentTime.setCurrentTime(Time.DAYEND.getValue());
         bridgeLocation.setBias(.15); // lights on
 
@@ -91,7 +91,6 @@ public class Story {
 
         System.out.println("\n");
         
-    
         System.out.println("[STORYEND]");
 
         System.out.println("Neznayka`s " + neznaykaCharacter.toString());

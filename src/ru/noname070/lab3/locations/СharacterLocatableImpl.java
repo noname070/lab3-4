@@ -1,6 +1,5 @@
 package ru.noname070.lab3.locations;
 
-import java.nio.charset.CharacterCodingException;
 import java.util.ArrayList;
 
 import ru.noname070.lab3.characters.Character;

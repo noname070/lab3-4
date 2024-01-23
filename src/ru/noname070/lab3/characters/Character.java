@@ -81,10 +81,6 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
 
     }
 
-    // public Character(СharacterLocatableImpl location, CurrentTimeContainer currentTime, String...names) {
-        
-    // }
-
     @Override
     public String getName() {
         return this.name;
@@ -153,18 +149,6 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         thoughts = newThoughts;
         return this.getName() + " now starving by hunger\n"+newThoughts.toString();
     }
-
-    // public ArrayList<LocatableHistory> getLocationHistory(Character c) {
-    //     ArrayList<LocatableHistory> currentCharacterHistory = new ArrayList<LocatableHistory>();
-    //     for (LocatableHistory r : c.currnetLocation.getHistory()) {
-    //         if (r.character() == c ) {
-    //             currentCharacterHistory.add(r);
-    //         }
-    //     }
-
-    //     return currentCharacterHistory;
-
-    // }
 
     @Override
     public void timeUpdater(CurrentTimeContainer currentTime) {
