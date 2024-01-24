@@ -45,8 +45,11 @@ public class Story {
         }
 
         if (Time.EVENING.getValue() == currentTime.getCurrentTime() ) {
-            System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
-        
+            try {
+                System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
+            } catch (CharacterMovementException charMoveExc) {
+                System.out.println("Character can`t move here");
+            } finally {System.exit(-342);}
         }
         currentTime.setCurrentTime(Time.DAYEND.getValue());
         bridgeLocation.setBias(.15); // lights on
