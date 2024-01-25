@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import ru.noname070.lab3.entity.IEntity;
 import ru.noname070.lab3.exceptions.CharacterMovementException;
-import ru.noname070.lab3.locations.IСharacterLocatable;
-import ru.noname070.lab3.time.ITimeContainer;
+import ru.noname070.lab3.locations.ICharacterLocatable;
 
 public interface ICharacter extends IEntity {
 
@@ -13,22 +12,17 @@ public interface ICharacter extends IEntity {
 
     void setName(String name);
 
-    void joinLocation(IСharacterLocatable l) throws CharacterMovementException;
+    void joinLocation(ICharacterLocatable l) throws CharacterMovementException;
 
-    IСharacterLocatable getCurrentLocation();
+    ICharacterLocatable getCurrentLocation();
 
     ArrayList<String> getThoughts();
 
-    String goLookingFor(ICharacter targetCharacter, IСharacterLocatable targetLocation) throws CharacterMovementException;
-
-    // TODO: не используется
-    Boolean goLookingFor(ICharacter targetCharacter);
+    void goLookingFor(ICharacter targetCharacter, ICharacterLocatable targetLocation) throws CharacterMovementException;
 
     String divertHunger();
 
     String hungerStiffle(ArrayList<String> newThoughts);
 
-    // TODO: не используется
-    void timeUpdater(ITimeContainer currentTime);
 
 }

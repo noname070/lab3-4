@@ -5,48 +5,37 @@ import java.util.ArrayList;
 
 import ru.noname070.lab3.entity.Entity;
 import ru.noname070.lab3.exceptions.CharacterMovementException;
-import ru.noname070.lab3.locations.IСharacterLocatable;
+import ru.noname070.lab3.locations.ICharacterLocatable;
 import ru.noname070.lab3.stiffleActions.StiffleActions;
 import ru.noname070.lab3.time.ITimeContainer;
 
 public class Character extends Entity.TimeSlaveEntity implements ICharacter {
-    // TODO: сделай поле final
-    private IСharacterLocatable currnetLocation;
-
-    // TODO: можно написать сразу = 100;
-    private int hungerScore;
-    // TODO: `new ArrayList<String>();` - убери String (<String> -> <>)
-    private ArrayList<String> thoughts = new ArrayList<String>();
+    private final ICharacterLocatable currnetLocation;
+    private int hungerScore = 100;
+    private ArrayList<String> thoughts = new ArrayList<>();
 
 
-    public Character(String name, IСharacterLocatable location, ITimeContainer currentTime) throws CharacterMovementException {
+    public Character(String name, ICharacterLocatable location, ITimeContainer currentTime) throws CharacterMovementException {
         super(name, currentTime);
-        this.hungerScore = 100;
         location.joinCharacter(this);
         this.currnetLocation = location;
 
     }
 
-    public Character(String name, IСharacterLocatable location, ArrayList<String> thoughts, ITimeContainer currentTime) throws CharacterMovementException {
-        // TODO: здесь можно вызвать конструктор выше - this(name, location, currentTime);
-        super(name, currentTime);
-        this.hungerScore = 100;
-        location.joinCharacter(this);
-        this.currnetLocation = location;
-
-        // TODO: это оставить
+    public Character(String name, ICharacterLocatable location, ArrayList<String> thoughts, ITimeContainer currentTime) throws CharacterMovementException {
+        this(name, location, currentTime);
         this.thoughts = thoughts;
 
     }
 
-    @Override
-    public void joinLocation(IСharacterLocatable l) throws CharacterMovementException {
+    // override?
+    public void joinLocation(ICharacterLocatable l) throws CharacterMovementException {
         currnetLocation.leaveCharacter(this);
         l.joinCharacter(this);
     }
 
-    @Override
-    public IСharacterLocatable getCurrentLocation() {
+    // override?
+    public ICharacterLocatable getCurrentLocation() {
         return this.currnetLocation;
     }
 
@@ -55,54 +44,45 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         return thoughts;
     }
 
-
-    // TODO: лучше метод сделать void (вместо return -> println(...))
-    // TODO: используй String.format вместо "..." + "..."
-    public String goLookingFor(ICharacter targetCharacter, IСharacterLocatable targetLocation) throws CharacterMovementException {
+    public void goLookingFor(ICharacter targetCharacter, ICharacterLocatable targetLocation) throws CharacterMovementException {
         joinLocation(targetLocation);
         for (ICharacter suspectCharacter : targetLocation.getAllVisitors()) {
             if (suspectCharacter.equals(targetCharacter)) {
-                return "wow! " + this.getName()  + " succumbed that it`s a " + targetCharacter.getName() + " in " + targetLocation.getName();
-            } else { return "oh noo "+ this.getName() + " succumbed that it`s a " + suspectCharacter.getName() + " in " + targetLocation.getName();}
+                System.out.println(String.format("wow! %s succumbed that it`s a %s in %s" , this.getName(), targetCharacter.getName(), targetCharacter.getName()));
+            } else System.out.println(String.format("oh noo %s succumbed that it`s a %s in %s", this.getName(), suspectCharacter.getName(), targetLocation.getName()));
         }
-        return null; // for vscode
     }
 
-    // TODO: лучше метод сделать void (вместо return -> println(...))
 
-    @Override
-    public Boolean goLookingFor(ICharacter targetCharacter) {
+    public void goLookingFor(ICharacter targetCharacter) {
         for (ICharacter suspectCharacter : targetCharacter.getCurrentLocation().getAllVisitors()) {
-            if (suspectCharacter.equals(targetCharacter)) {
-                return true;
-            } else { return false;}
+            System.out.println(
+                suspectCharacter.equals(targetCharacter) ? "True" : "False"
+           );
+
         }
-        return null; // for vscode
     }
 
-
-    // TODO: используй String.format вместо "..." + "..."
 
     @Override
     public String divertHunger() {
         if (hungerScore > 10 && hungerScore < 50) {
             hungerScore -= 1;
-            StiffleActions stiffleActionToDo = StiffleActions.getRandomAction();
-            String result = StiffleActions.doAction(stiffleActionToDo);
-            return this.getName() + " " + result;
-        } else {return "Character " + this.getName() +  " too hungry";}
+            String result = StiffleActions.getRandomAction().actionDescription();
+            return String.format("character %s %s", this.getName(), result);
+        } else return String.format("character %s too hungry", this.getName());
 
     }
 
-    // TODO: используй String.format вместо "..." + "..."
 
     @Override
     public String hungerStiffle(ArrayList<String> newThoughts) {
         hungerScore = 40;
         thoughts.clear();
         thoughts = newThoughts;
-        return this.getName() + " now starving by hunger\n"+newThoughts.toString();
+        return String.format("%s now starving by hunger\n%s", this.getName(), newThoughts.toString());
     }
+    
 
     @Override
     public void timeUpdater(ITimeContainer currentTime) {
@@ -111,6 +91,30 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         }
     }
 
+    @Override
+    public int hashCode() {
+        return (int) this.currnetLocation.getName().hashCode() * this.hungerScore * this.getThoughts().toString().hashCode() * this.getName().hashCode();
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("object Character; name:%s; currntLocation:%s, currentTime:%s, hungerScore:%s, thoughts:%s",
+                                this.getName(), this.getCurrentLocation().getName(), this.getCurrentTime().getCurrentTime(), this.hungerScore, this.getThoughts().toString());
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        
+        Character otherCharacter = (Character) obj;
+        if (this.getName() != otherCharacter.getName()) return false;
+        if (this.getCurrentLocation() != otherCharacter.getCurrentLocation()) return false;
+        if (this.hungerScore!= otherCharacter.hungerScore) return false;
+        if (this.thoughts != otherCharacter.thoughts) return false;
+
+        return true;
+    }
 
 }

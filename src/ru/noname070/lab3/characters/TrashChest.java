@@ -1,24 +1,19 @@
 package ru.noname070.lab3.characters;
 
-import ru.noname070.lab3.entity.Entity;
+
 import java.util.Random;
 
-public class TrashChest extends Entity {
+public final class TrashChest {
 
-    // TODO: почему бы его не вынести в отдельный файл, в пакет types или enums
+    // Q: почему бы его не вынести в отдельный файл, в пакет types или enums
+    // A: inner class по условию задачи
 
     public enum Trash {
-        RUBBER_PILLOW("РЕЗИНОВЫЕ ПОДУШЕЧКИ"),
-        OLD_MATTRESS("СТАРЫЕ ДВА МАТРАСИКА"),
-        CLOTH("ПАКЕТ РВАНОЙ ОДЕЖДЫ");
+        RUBBER_PILLOW,
+        OLD_MATTRESS,
+        CLOTH;
         
         private static Random rnd = new Random();
-        // TODO: не используется
-        private String x;
-
-        Trash(String x) {
-            this.x = x;
-        }
 
         public static Trash getRandomTrash() {
             Trash[] items = values();
@@ -26,11 +21,9 @@ public class TrashChest extends Entity {
         }
     }
 
-    // TODO: final
-    private Trash trashType;
+    private final Trash trashType;
 
     public TrashChest(Trash trashType) {
-        super(trashType.name());
         this.trashType = trashType;
     }
 

@@ -18,9 +18,9 @@ import ru.noname070.lab3.time.Time;
 public class Story {
     public static void play() throws CharacterMovementException {
         CurrentTimeContainer currentTime = new CurrentTimeContainer(Time.MORNING.getValue());
-        System.out.println("Now it`s " + currentTime.toString());
+        System.out.println("now it`s " + currentTime.toString());
 
-        СharacterLocatableImpl shelterLocation = new СharacterLocatableImpl("Убещише", currentTime, -.5);
+        СharacterLocatableImpl shelterLocation = new СharacterLocatableImpl("Убежише", currentTime, -.5);
         СharacterLocatableImpl bridgeLocation = new СharacterLocatableImpl("Мост", currentTime);
         СharacterLocatableImpl unknowLocation = new СharacterLocatableImpl("Неизвестнось", currentTime);
 
@@ -29,7 +29,6 @@ public class Story {
         Character shortyCharacterImpl = new Character("Коротышка", bridgeLocation, currentTime);
         Character kozlikCharacterImpl = new Character("Козлик", unknowLocation, currentTime);
 
-        
 
         ArrayList<String> newThoughts = new ArrayList<String>(Arrays.asList("Куда же запропастился Козлик?", "Почему он не возвращается?"));
         System.out.println(neznaykaCharacter.hungerStiffle(newThoughts));
@@ -44,9 +43,9 @@ public class Story {
 
         if (Time.EVENING.getValue() == currentTime.getCurrentTime() ) {
             try {
-                System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
+                neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation);
             } catch (CharacterMovementException charMoveExc) {
-                System.out.println("Character can`t move here");
+                System.out.println("character can`t move here");
                 System.exit(-342);
             }
         }
@@ -72,10 +71,6 @@ public class Story {
                 }
             }
 
-            @Override
-            public ITimeContainer getCurrentTime() {
-                return this.currentTime;
-            }
 
             @Override
             public void setCurrentTime(ITimeContainer time) throws CharacterMovementException {
@@ -100,7 +95,7 @@ public class Story {
         manyShorties.setCurrentTime(currentTime);
         time.addObjects2Update(manyShorties);
 
-        for (; currentTime.getCurrentTime() < Time.FULLDAY.getValue(); currentTime.addToCurrentTime(200)) {
+        for (; currentTime.getCurrentTime() < Time.FULL_DAY.getValue(); currentTime.addToCurrentTime(200)) {
             time.timeStep();
         }
 
@@ -108,7 +103,10 @@ public class Story {
         
         System.out.println("[STORYEND]");
 
-        System.out.println("Neznayka`s " + neznaykaCharacter);
+        System.out.println("Neznayka`s toString : " + neznaykaCharacter.toString());
         System.out.println("Neznayka`s Hashcode " + neznaykaCharacter.hashCode());
+
+        System.out.println("Shelter`s toString : " + shelterLocation.toString());
+        System.out.println("Shelter`s Hashcode : " + shelterLocation.hashCode());
     }
 }

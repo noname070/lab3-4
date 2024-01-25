@@ -3,27 +3,17 @@ package ru.noname070.lab3.stiffleActions;
 import java.util.Random;
 
 public enum StiffleActions {
-    SONGS,
-    PUZZLES,
-    PROVERBS;
+    SONGS("singing songs to stifle hunger"),
+    PUZZLES("are making deals to stifle hunger"),
+    PROVERBS("reminded of the proverbs to stifle hunger");
 
-    // TODO: лучше добавить поле String actionDescription и для него конструктор, уже у каждого объекта вызывать это описание
-    public static String doAction(StiffleActions action) {
-        switch (action) {
-            case SONGS:
-                return "singing songs to stifle hunger";
-            
-            case PUZZLES:
-                return "are making deals to stifle hunger";
+    private String name;
+    StiffleActions(String name) {
+        this.name = name;
+    }
 
-            case PROVERBS:
-                return "reminded of the proverbs to stifle hunger";
-            
-            default:
-                break;
-        
-        }
-        return "";
+    public String actionDescription() {
+        return this.name;
     }
 
     private static Random rnd = new Random();

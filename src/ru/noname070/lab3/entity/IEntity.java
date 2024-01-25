@@ -4,7 +4,4 @@ public interface IEntity {
 
     String getName();
 
-    // TODO: не используется
-    void setName(String name);
-
 }

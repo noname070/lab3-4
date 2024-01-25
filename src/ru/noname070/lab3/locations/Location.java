@@ -27,19 +27,10 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
         this.visibility_bias = visibility_bias;
     }
 
-    @Override
-    public double getVisibility() {
-        return visibility;
-    }
 
     @Override
     public void setBias(double new_bias) {
         this.visibility_bias = new_bias;
-    }
-
-    @Override
-    public void setVisibility(double new_visibility) {
-        this.visibility = new_visibility;
     }
 
     public void setRayTraycing(ILocation targetLocation) {
@@ -50,8 +41,7 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
         this.setCurrentTime(currentTime);
 
         this.visibility = Math.min(1, -1 * Math.tanh(
-                // TODO: cast to double `currentTime.getCurrentTime() / (24000)`
-                currentTime.getCurrentTime() / (24000) * 3.5 - 3) * .5 + .6
+                ( (double) currentTime.getCurrentTime() / (24000) ) * 3.5 - 3) * .5 + .6
         ) + visibility_bias + rayTracingBias;
         this.rayTracingBias = 0;
 
@@ -59,6 +49,27 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
             rayTraycingLocation.setRayTracingBias(this.visibility * .4);
         }
 
+    }
+
+    @Override
+    public int hashCode() {
+        return (Double.hashCode(Math.min(0.001, this.visibility) * Math.min(0.001, this.visibility_bias) * Math.min(0.001, this.rayTracingBias)) ) * this.getName().hashCode() * this.getCurrentTime().getCurrentTime();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (this == obj) return true;
+        if (this.getClass() != obj.getClass()) return false;
+        
+        Location othertLocation = (Location) obj;
+        if (this.getName() != othertLocation.getName()) return false;
+        if (this.rayTracingBias != othertLocation.rayTracingBias) return false;
+        if (this.rayTraycingLocation != othertLocation.rayTraycingLocation) return false;
+        if (this.visibility != othertLocation.visibility) return false;
+        if (this.visibility_bias != othertLocation.visibility_bias) return false;
+        
+        return true;
     }
 
 
