@@ -6,9 +6,11 @@ import ru.noname070.lab3.characters.ICharacter;
 import ru.noname070.lab3.exceptions.*;
 
 public interface IСharacterLocatable {
+    // TODO: у тебя "С" - русская
 
     ArrayList<ICharacter> getAllVisitors();
 
+    // TODO: не используется
     boolean isCharacterInLocation(ICharacter c);
 
     void joinCharacter(ICharacter c) throws CharacterMovementException;

@@ -68,7 +68,7 @@ public class Story {
                     for (ICharacter s : this.shorties) {
                         this.goSleeping(s);
                     }
-                    this.areSleeping = (this.areSleeping == false) ? true : false;
+                    this.areSleeping = !this.areSleeping;
                 }
             }
 
@@ -90,7 +90,8 @@ public class Story {
 
 			@Override
 			public void goSleeping(ICharacter c) {
-                System.out.println(c.getName() + "go Zzz with " + 
+                System.out.println(c.getName() + "go Zzz with " +
+                        // TODO: строки - объекты, нужно сравнивать через equals
                                     new TrashChest( c.getName() == "Пузырь" ? Trash.RUBBER_PILLOW : Trash.OLD_MATTRESS ).makeSleepingPlaceFrom() );
 			}
 
@@ -107,7 +108,7 @@ public class Story {
         
         System.out.println("[STORYEND]");
 
-        System.out.println("Neznayka`s " + neznaykaCharacter.toString());
+        System.out.println("Neznayka`s " + neznaykaCharacter);
         System.out.println("Neznayka`s Hashcode " + neznaykaCharacter.hashCode());
     }
 }

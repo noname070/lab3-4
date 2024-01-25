@@ -21,12 +21,14 @@ public interface ICharacter extends IEntity {
 
     String goLookingFor(ICharacter targetCharacter, IСharacterLocatable targetLocation) throws CharacterMovementException;
 
+    // TODO: не используется
     Boolean goLookingFor(ICharacter targetCharacter);
 
     String divertHunger();
 
     String hungerStiffle(ArrayList<String> newThoughts);
 
+    // TODO: не используется
     void timeUpdater(ITimeContainer currentTime);
 
 }

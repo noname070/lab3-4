@@ -37,11 +37,14 @@ public abstract class Entity implements IEntity {
 
     public void setName(String name ) { this.name = name;}
 
+    // TODO: неправильно реализованный equals
 
     public boolean equals(Object obj) {
         return this.hashCode() == obj.hashCode() ? true : false;
     }
 
+    // TODO: у тебя есть поле name в этом классе, если ты вызовешь метод у класса наследника, поле name не будет учитываться
+    // TODO: реализуй hashhode(), equals() в наследниках
     @Override
     public int hashCode() {
         String F = "";
@@ -79,6 +82,7 @@ public abstract class Entity implements IEntity {
         return name + "("+params+") " + (except.length() == 0 ? "" : "throws " + except + " " ) + "-> " + ret   ;
     }
 
+    // TODO: реализуй в наследниках, доступ к полю name в этом классе получи через getter
     @Override
     public String toString() {
 

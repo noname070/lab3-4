@@ -10,8 +10,12 @@ import ru.noname070.lab3.stiffleActions.StiffleActions;
 import ru.noname070.lab3.time.ITimeContainer;
 
 public class Character extends Entity.TimeSlaveEntity implements ICharacter {
+    // TODO: сделай поле final
     private IСharacterLocatable currnetLocation;
-    private int hungerScore; 
+
+    // TODO: можно написать сразу = 100;
+    private int hungerScore;
+    // TODO: `new ArrayList<String>();` - убери String (<String> -> <>)
     private ArrayList<String> thoughts = new ArrayList<String>();
 
 
@@ -24,11 +28,13 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     }
 
     public Character(String name, IСharacterLocatable location, ArrayList<String> thoughts, ITimeContainer currentTime) throws CharacterMovementException {
+        // TODO: здесь можно вызвать конструктор выше - this(name, location, currentTime);
         super(name, currentTime);
         this.hungerScore = 100;
         location.joinCharacter(this);
         this.currnetLocation = location;
-        
+
+        // TODO: это оставить
         this.thoughts = thoughts;
 
     }
@@ -50,6 +56,8 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     }
 
 
+    // TODO: лучше метод сделать void (вместо return -> println(...))
+    // TODO: используй String.format вместо "..." + "..."
     public String goLookingFor(ICharacter targetCharacter, IСharacterLocatable targetLocation) throws CharacterMovementException {
         joinLocation(targetLocation);
         for (ICharacter suspectCharacter : targetLocation.getAllVisitors()) {
@@ -59,6 +67,8 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         }
         return null; // for vscode
     }
+
+    // TODO: лучше метод сделать void (вместо return -> println(...))
 
     @Override
     public Boolean goLookingFor(ICharacter targetCharacter) {
@@ -71,6 +81,8 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
     }
 
 
+    // TODO: используй String.format вместо "..." + "..."
+
     @Override
     public String divertHunger() {
         if (hungerScore > 10 && hungerScore < 50) {
@@ -81,7 +93,9 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter {
         } else {return "Character " + this.getName() +  " too hungry";}
 
     }
-    
+
+    // TODO: используй String.format вместо "..." + "..."
+
     @Override
     public String hungerStiffle(ArrayList<String> newThoughts) {
         hungerScore = 40;

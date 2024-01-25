@@ -1,19 +1,21 @@
 package ru.noname070.lab3.time;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import ru.noname070.lab3.entity.ITimeSlaveEntity;
 
 public class GlobalTimeUpdater implements ITimeUpdater {
+    // TODO: final
     private CurrentTimeContainer currentTime;
+
+    // TODO: final
     private ArrayList<ITimeSlaveEntity> objects2update = new ArrayList<ITimeSlaveEntity>();
 
     public GlobalTimeUpdater(CurrentTimeContainer currentTime, ITimeSlaveEntity...objects2update){
         this.currentTime = currentTime;
-        // this.objects2update.addAll();
-        for (ITimeSlaveEntity o : objects2update) {
-            this.objects2update.add(o);
-        }
+        Collections.addAll(this.objects2update, objects2update);
     }
 
     @Override
@@ -25,9 +27,7 @@ public class GlobalTimeUpdater implements ITimeUpdater {
 
     @Override
     public void addObjects2Update(ITimeSlaveEntity...anyObjects) {
-        for (ITimeSlaveEntity o : anyObjects) {
-            this.objects2update.add(o);
-        }
+        this.objects2update.addAll(Arrays.asList(anyObjects));
     }
     
 }

@@ -15,11 +15,12 @@ public class СharacterLocatableImpl extends Location implements IСharacterLoca
         super(name, currentTime, visibility_bias);
     }
 
+    // TODO: final
     private ArrayList<ICharacter> visitors = new ArrayList<ICharacter>();
 
     @Override
     public ArrayList<ICharacter> getAllVisitors() {
-        // return visitors;
+        // TODO: 'visitors.size() > 0' can be replaced with '!visitors.isEmpty()'
         if (visitors.size() > 0) return visitors;
         else throw new NoAnyVisitorsError("No any visitors in " + getName());
     }
