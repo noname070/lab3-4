@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import ru.noname070.lab3.characters.Character;
-import ru.noname070.lab3.entity.Entity;
+import ru.noname070.lab3.characters.ICharacter;
+import ru.noname070.lab3.characters.Shorties;
+import ru.noname070.lab3.characters.TrashChest;
+import ru.noname070.lab3.characters.TrashChest.Trash;
 import ru.noname070.lab3.exceptions.CharacterMovementException;
 import ru.noname070.lab3.locations.СharacterLocatableImpl;
 import ru.noname070.lab3.time.CurrentTimeContainer;
 import ru.noname070.lab3.time.GlobalTimeUpdater;
+import ru.noname070.lab3.time.ITimeContainer;
 import ru.noname070.lab3.time.Time;
 
 public class Story {
@@ -30,12 +34,6 @@ public class Story {
         ArrayList<String> newThoughts = new ArrayList<String>(Arrays.asList("Куда же запропастился Козлик?", "Почему он не возвращается?"));
         System.out.println(neznaykaCharacter.hungerStiffle(newThoughts));
 
-        // // for (; currentTime < Time.EVENING.getValue(); currentTime += 200 ) {
-        // for (; currentTime.getCurrentTime() < Time.EVENING.getValue(); currentTime.addToCurrentTime(200) ) {
-        //     System.out.println(neznaykaCharacter.divertHunger());
-        //     System.out.println("Now it`s " + currentTime.getCurrentTime() + "\n");
-        // }
-
         GlobalTimeUpdater time = new GlobalTimeUpdater(     currentTime,
             neznaykaCharacter, shortyCharacterImpl, kozlikCharacterImpl,
             shelterLocation, bridgeLocation, unknowLocation             );
@@ -49,44 +47,57 @@ public class Story {
                 System.out.println(neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation));
             } catch (CharacterMovementException charMoveExc) {
                 System.out.println("Character can`t move here");
-            } finally {System.exit(-342);}
+                System.exit(-342);
+            }
         }
+
         currentTime.setCurrentTime(Time.DAYEND.getValue());
         bridgeLocation.setBias(.15); // lights on
 
+        Shorties manyShorties = new Shorties() {
 
-        class StoryAboutShorties extends Entity.TimeSlaveEntity {
-            String name;
-            Character.TrashChest.Trash personTrash;
+            private ArrayList<ICharacter> shorties = new ArrayList<ICharacter>();
+            private ITimeContainer currentTime;
+            private double ustalast = 0.0;
+            private boolean areSleeping = false;
 
-            double ustalast = 0.0;
-
-
-            public StoryAboutShorties(String name, Character.TrashChest.Trash personalTrash) {
-                this.name = name;
-                this.personTrash = personalTrash;
-            }
-
-            private boolean isSleeping = false;
-
-            public void goSleeping() {
-                this.isSleeping = true;
-                System.out.println(this.name + " go Zzz with " + personTrash.toString());
+            @Override
+            public void timeUpdater(ITimeContainer currentTime) {
+                this.ustalast = Math.tanh(currentTime.getCurrentTime()*3.5 - 2 ) * .5 + .6;
+                if (this.ustalast > .6 & !this.areSleeping) {
+                    for (ICharacter s : this.shorties) {
+                        this.goSleeping(s);
+                    }
+                    this.areSleeping = (this.areSleeping == false) ? true : false;
+                }
             }
 
             @Override
-            public void timeUpdater(CurrentTimeContainer currentTime) {
-                this.ustalast = Math.tanh(currentTime.getCurrentTime()*3.5 - 2 ) * .5 + .6;
-                if (this.ustalast > .6) {
-                    if (!isSleeping) { goSleeping(); };
-                }
+            public ITimeContainer getCurrentTime() {
+                return this.currentTime;
             }
-            
-        }
 
-        StoryAboutShorties sh1 = new StoryAboutShorties("Миллиончик", Character.TrashChest.Trash.OLD_MATTRESS);
-        StoryAboutShorties sh2 = new StoryAboutShorties("Пузырь", Character.TrashChest.Trash.RUBBER_PILLOW);
-        time.addObjects2Update(sh1, sh2);
+            @Override
+            public void setCurrentTime(ITimeContainer time) throws CharacterMovementException {
+                this.currentTime = time;
+                this.shorties = new ArrayList<>( 
+                            Arrays.asList(
+                                    new Character("Миллиончик", shelterLocation, this.currentTime),
+                                    new Character("Пузырь", shelterLocation, this.currentTime) 
+                                )
+                            );
+            }
+
+			@Override
+			public void goSleeping(ICharacter c) {
+                System.out.println(c.getName() + "go Zzz with " + 
+                                    new TrashChest( c.getName() == "Пузырь" ? Trash.RUBBER_PILLOW : Trash.OLD_MATTRESS ).makeSleepingPlaceFrom() );
+			}
+
+        };
+
+        manyShorties.setCurrentTime(currentTime);
+        time.addObjects2Update(manyShorties);
 
         for (; currentTime.getCurrentTime() < Time.FULLDAY.getValue(); currentTime.addToCurrentTime(200)) {
             time.timeStep();

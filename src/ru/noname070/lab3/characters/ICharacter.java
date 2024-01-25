@@ -2,30 +2,31 @@ package ru.noname070.lab3.characters;
 
 import java.util.ArrayList;
 
+import ru.noname070.lab3.entity.IEntity;
 import ru.noname070.lab3.exceptions.CharacterMovementException;
-import ru.noname070.lab3.locations.СharacterLocatableImpl;
-import ru.noname070.lab3.time.CurrentTimeContainer;
+import ru.noname070.lab3.locations.IСharacterLocatable;
+import ru.noname070.lab3.time.ITimeContainer;
 
-public interface ICharacter {
+public interface ICharacter extends IEntity {
 
     String getName();
 
     void setName(String name);
 
-    void joinLocation(СharacterLocatableImpl l) throws CharacterMovementException;
+    void joinLocation(IСharacterLocatable l) throws CharacterMovementException;
 
-    СharacterLocatableImpl getCurrentLocation();
+    IСharacterLocatable getCurrentLocation();
 
     ArrayList<String> getThoughts();
 
-    String goLookingFor(Character targetCharacter, СharacterLocatableImpl targetLocation) throws CharacterMovementException;
+    String goLookingFor(ICharacter targetCharacter, IСharacterLocatable targetLocation) throws CharacterMovementException;
 
-    Boolean goLookingFor(Character targetCharacter);
+    Boolean goLookingFor(ICharacter targetCharacter);
 
     String divertHunger();
 
     String hungerStiffle(ArrayList<String> newThoughts);
 
-    void timeUpdater(CurrentTimeContainer currentTime);
+    void timeUpdater(ITimeContainer currentTime);
 
 }

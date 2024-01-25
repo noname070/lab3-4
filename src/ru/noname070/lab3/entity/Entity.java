@@ -6,20 +6,40 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import ru.noname070.lab3.time.CurrentTimeContainer;
+import ru.noname070.lab3.time.ITimeContainer;
 
-public abstract class Entity {
+public abstract class Entity implements IEntity {
 
-    public static abstract class TimeSlaveEntity extends Entity {
-        abstract public void timeUpdater(CurrentTimeContainer currentTime);
+    private String name;
+
+
+    public static abstract class TimeSlaveEntity extends Entity implements ITimeSlaveEntity {
+        private ITimeContainer currentTime;
+        
+        public TimeSlaveEntity(String name, ITimeContainer time) {
+            super(name);
+            this.currentTime = time;
+        }
+
+        public ITimeContainer getCurrentTime() {return this.currentTime;}
+
+        public void setCurrentTime(ITimeContainer time) {this.currentTime = time;}
+
+        abstract public void timeUpdater(ITimeContainer currentTime);
         
     }
 
-    @Override
+    public Entity (String name) {
+        this.name = name;
+    }
+
+    public String getName() {return this.name;}
+
+    public void setName(String name ) { this.name = name;}
+
+
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        return super.equals(obj);
+        return this.hashCode() == obj.hashCode() ? true : false;
     }
 
     @Override
@@ -36,7 +56,7 @@ public abstract class Entity {
                     F += field.getName() + "=" + value + ";";
                 }
             }
-        } catch (IllegalArgumentException | IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } 
 
@@ -69,8 +89,7 @@ public abstract class Entity {
                         .collect(Collectors.joining(";\n"));
         
 
-        int idx = this.getClass().getName().lastIndexOf(".");
-        return this.getClass().getName().substring(idx+1) + " methods: " + M + ", fields: NaN";
+        return this.getClass().getName() + " methods: " + M;
 
     }
 

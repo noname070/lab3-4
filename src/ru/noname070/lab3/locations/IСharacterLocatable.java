@@ -2,19 +2,19 @@ package ru.noname070.lab3.locations;
 
 import java.util.ArrayList;
 
-import ru.noname070.lab3.characters.Character;
+import ru.noname070.lab3.characters.ICharacter;
 import ru.noname070.lab3.exceptions.*;
 
 public interface IСharacterLocatable {
 
-    // ArrayList<LocatableHistory> getHistory();
+    ArrayList<ICharacter> getAllVisitors();
 
-    ArrayList<Character> getAllVisitors();
+    boolean isCharacterInLocation(ICharacter c);
 
-    boolean isCharacterInLocation(Character c);
+    void joinCharacter(ICharacter c) throws CharacterMovementException;
 
-    void joinCharacter(Character c) throws CharacterMovementException;
+    void leaveCharacter(ICharacter c) throws CharacterMovementException;
 
-    void leaveCharacter(Character c) throws CharacterMovementException;
+    String getName();
 
 }

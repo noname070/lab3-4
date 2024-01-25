@@ -13,8 +13,7 @@ public interface ILocation {
 
     void setVisibility(double new_visibility);
 
-    void setRayTraycing(Location targetLocation);
+    void setRayTraycing(ILocation targetLocation);
 
-    boolean equals(Object obj);
 
 }
