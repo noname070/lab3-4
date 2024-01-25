@@ -86,8 +86,7 @@ public class Story {
 			@Override
 			public void goSleeping(ICharacter c) {
                 System.out.println(c.getName() + "go Zzz with " +
-                        // TODO: строки - объекты, нужно сравнивать через equals
-                                    new TrashChest( c.getName() == "Пузырь" ? Trash.RUBBER_PILLOW : Trash.OLD_MATTRESS ).makeSleepingPlaceFrom() );
+                    new TrashChest( c.getName().equals("Пузырь") ? Trash.RUBBER_PILLOW : Trash.OLD_MATTRESS ).makeSleepingPlaceFrom() );
 			}
 
         };
