@@ -24,24 +24,25 @@ public class Story {
         СharacterLocatableImpl bridgeLocation = new СharacterLocatableImpl("Мост", currentTime);
         СharacterLocatableImpl unknowLocation = new СharacterLocatableImpl("Неизвестнось", currentTime);
 
-        ArrayList<String> neznaykaThoughts = new ArrayList<String>(Arrays.asList("Ракета", "Пончик", "Козлик", "Темно здесь..."));
+        ArrayList<String> neznaykaThoughts = new ArrayList<String>(
+                Arrays.asList("Ракета", "Пончик", "Козлик", "Темно здесь..."));
         Character neznaykaCharacter = new Character("Незнайка", shelterLocation, neznaykaThoughts, currentTime);
         Character shortyCharacterImpl = new Character("Коротышка", bridgeLocation, currentTime);
         Character kozlikCharacterImpl = new Character("Козлик", unknowLocation, currentTime);
 
-
-        ArrayList<String> newThoughts = new ArrayList<String>(Arrays.asList("Куда же запропастился Козлик?", "Почему он не возвращается?"));
+        ArrayList<String> newThoughts = new ArrayList<String>(
+                Arrays.asList("Куда же запропастился Козлик?", "Почему он не возвращается?"));
         System.out.println(neznaykaCharacter.hungerStiffle(newThoughts));
 
-        GlobalTimeUpdater time = new GlobalTimeUpdater(     currentTime,
-            neznaykaCharacter, shortyCharacterImpl, kozlikCharacterImpl,
-            shelterLocation, bridgeLocation, unknowLocation             );
-        
+        GlobalTimeUpdater time = new GlobalTimeUpdater(currentTime,
+                neznaykaCharacter, shortyCharacterImpl, kozlikCharacterImpl,
+                shelterLocation, bridgeLocation, unknowLocation);
+
         for (; currentTime.getCurrentTime() < Time.EVENING.getValue(); currentTime.addToCurrentTime(200)) {
             time.timeStep();
         }
 
-        if (Time.EVENING.getValue() == currentTime.getCurrentTime() ) {
+        if (Time.EVENING.getValue() == currentTime.getCurrentTime()) {
             try {
                 neznaykaCharacter.goLookingFor(kozlikCharacterImpl, bridgeLocation);
             } catch (CharacterMovementException charMoveExc) {
@@ -62,7 +63,7 @@ public class Story {
 
             @Override
             public void timeUpdater(ITimeContainer currentTime) {
-                this.ustalast = Math.tanh(currentTime.getCurrentTime()*3.5 - 2 ) * .5 + .6;
+                this.ustalast = Math.tanh(currentTime.getCurrentTime() * 3.5 - 2) * .5 + .6;
                 if (this.ustalast > .6 & !this.areSleeping) {
                     for (ICharacter s : this.shorties) {
                         this.goSleeping(s);
@@ -71,23 +72,21 @@ public class Story {
                 }
             }
 
-
             @Override
             public void setCurrentTime(ITimeContainer time) throws CharacterMovementException {
                 this.currentTime = time;
-                this.shorties = new ArrayList<>( 
-                            Arrays.asList(
-                                    new Character("Миллиончик", shelterLocation, this.currentTime),
-                                    new Character("Пузырь", shelterLocation, this.currentTime) 
-                                )
-                            );
+                this.shorties = new ArrayList<>(
+                        Arrays.asList(
+                                new Character("Миллиончик", shelterLocation, this.currentTime),
+                                new Character("Пузырь", shelterLocation, this.currentTime)));
             }
 
-			@Override
-			public void goSleeping(ICharacter c) {
+            @Override
+            public void goSleeping(ICharacter c) {
                 System.out.println(c.getName() + "go Zzz with " +
-                    new TrashChest( c.getName().equals("Пузырь") ? Trash.RUBBER_PILLOW : Trash.OLD_MATTRESS ).makeSleepingPlaceFrom() );
-			}
+                        new TrashChest(c.getName().equals("Пузырь") ? Trash.RUBBER_PILLOW : Trash.OLD_MATTRESS)
+                                .makeSleepingPlaceFrom());
+            }
 
         };
 
@@ -99,7 +98,7 @@ public class Story {
         }
 
         System.out.println("\n");
-        
+
         System.out.println("[STORYEND]");
 
         System.out.println("Neznayka`s toString : " + neznaykaCharacter.toString());
