@@ -6,7 +6,8 @@ public enum StiffleActions {
     SONGS,
     PUZZLES,
     PROVERBS;
-    
+
+    // TODO: лучше добавить поле String actionDescription и для него конструктор, уже у каждого объекта вызывать это описание
     public static String doAction(StiffleActions action) {
         switch (action) {
             case SONGS:
