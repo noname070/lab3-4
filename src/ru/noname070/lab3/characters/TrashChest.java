@@ -1,6 +1,5 @@
 package ru.noname070.lab3.characters;
 
-
 import java.util.Random;
 
 public final class TrashChest {
@@ -12,7 +11,7 @@ public final class TrashChest {
         RUBBER_PILLOW,
         OLD_MATTRESS,
         CLOTH;
-        
+
         private static Random rnd = new Random();
 
         public static Trash getRandomTrash() {

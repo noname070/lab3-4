@@ -1,6 +1,5 @@
 package ru.noname070.lab3.time;
 
-
 public enum Time {
     MORNING(1000),
     // NOON(6000),

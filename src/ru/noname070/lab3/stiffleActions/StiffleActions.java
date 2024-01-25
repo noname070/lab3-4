@@ -8,6 +8,7 @@ public enum StiffleActions {
     PROVERBS("reminded of the proverbs to stifle hunger");
 
     private String name;
+
     StiffleActions(String name) {
         this.name = name;
     }
@@ -17,7 +18,8 @@ public enum StiffleActions {
     }
 
     private static Random rnd = new Random();
-    public static StiffleActions getRandomAction()  {
+
+    public static StiffleActions getRandomAction() {
         StiffleActions[] actions = values();
         return actions[rnd.nextInt(actions.length)];
     }

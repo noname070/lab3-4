@@ -8,11 +8,17 @@ public class CurrentTimeContainer implements ITimeContainer {
     }
 
     @Override
-    public int getCurrentTime() {return time;}
+    public int getCurrentTime() {
+        return time;
+    }
 
     @Override
-    public void setCurrentTime(int time) {this.time = time;}
-    
+    public void setCurrentTime(int time) {
+        this.time = time;
+    }
+
     @Override
-    public void addToCurrentTime(int time) {this.time += time;}
+    public void addToCurrentTime(int time) {
+        this.time += time;
+    }
 }

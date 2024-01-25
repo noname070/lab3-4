@@ -24,5 +24,4 @@ public interface ICharacter extends IEntity {
 
     String hungerStiffle(ArrayList<String> newThoughts);
 
-
 }
