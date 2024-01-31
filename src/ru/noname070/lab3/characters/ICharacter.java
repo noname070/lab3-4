@@ -10,8 +10,6 @@ public interface ICharacter extends IEntity {
 
     String getName();
 
-    void setName(String name);
-
     void joinLocation(ICharacterLocatable l) throws CharacterMovementException;
 
     ICharacterLocatable getCurrentLocation();

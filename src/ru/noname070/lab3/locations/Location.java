@@ -4,6 +4,7 @@ import ru.noname070.lab3.entity.Entity;
 import ru.noname070.lab3.time.ITimeContainer;
 
 import java.lang.Math;
+import java.util.Objects;
 
 public class Location extends Entity.TimeSlaveEntity implements ILocation {
     private double visibility = 1.0;
@@ -30,10 +31,6 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
     @Override
     public void setBias(double new_bias) {
         this.visibility_bias = new_bias;
-    }
-
-    public void setRayTraycing(ILocation targetLocation) {
-        rayTraycingLocation = targetLocation;
     }
 
     public void timeUpdater(ITimeContainer currentTime) {
@@ -67,7 +64,7 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
             return false;
 
         Location othertLocation = (Location) obj;
-        if (this.getName() != othertLocation.getName())
+        if (!Objects.equals(this.getName(), othertLocation.getName()))
             return false;
         if (this.rayTracingBias != othertLocation.rayTracingBias)
             return false;
@@ -75,10 +72,7 @@ public class Location extends Entity.TimeSlaveEntity implements ILocation {
             return false;
         if (this.visibility != othertLocation.visibility)
             return false;
-        if (this.visibility_bias != othertLocation.visibility_bias)
-            return false;
-
-        return true;
+        return this.visibility_bias == othertLocation.visibility_bias;
     }
 
 }

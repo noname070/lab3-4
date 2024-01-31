@@ -7,7 +7,7 @@ import ru.noname070.lab3.characters.*;
 import ru.noname070.lab3.characters.Character;
 import ru.noname070.lab3.characters.TrashChest.Trash;
 import ru.noname070.lab3.exceptions.CharacterMovementException;
-import ru.noname070.lab3.locations.СharacterLocatableImpl;
+import ru.noname070.lab3.locations.CharacterLocatableImpl;
 import ru.noname070.lab3.time.*;
 
 public class Story {
@@ -15,23 +15,23 @@ public class Story {
         CurrentTimeContainer currentTime = new CurrentTimeContainer(Time.MORNING.getValue());
         System.out.println("now it`s " + currentTime.toString());
 
-        СharacterLocatableImpl shelterLocation = new СharacterLocatableImpl("Убежише", currentTime, -.5);
-        СharacterLocatableImpl bridgeLocation = new СharacterLocatableImpl("Мост", currentTime);
-        СharacterLocatableImpl unknowLocation = new СharacterLocatableImpl("Неизвестнось", currentTime);
+        CharacterLocatableImpl shelterLocation = new CharacterLocatableImpl("Убежише", currentTime, -.5);
+        CharacterLocatableImpl bridgeLocation = new CharacterLocatableImpl("Мост", currentTime);
+        CharacterLocatableImpl unknownLocation = new CharacterLocatableImpl("Неизвестнось", currentTime);
 
-        ArrayList<String> neznaykaThoughts = new ArrayList<String>(
+        ArrayList<String> neznaykaThoughts = new ArrayList<>(
                 Arrays.asList("Ракета", "Пончик", "Козлик", "Темно здесь..."));
         Character neznaykaCharacter = new Character("Незнайка", shelterLocation, neznaykaThoughts, currentTime);
         Character shortyCharacterImpl = new Character("Коротышка", bridgeLocation, currentTime);
-        Character kozlikCharacterImpl = new Character("Козлик", unknowLocation, currentTime);
+        Character kozlikCharacterImpl = new Character("Козлик", unknownLocation, currentTime);
 
-        ArrayList<String> newThoughts = new ArrayList<String>(
+        ArrayList<String> newThoughts = new ArrayList<>(
                 Arrays.asList("Куда же запропастился Козлик?", "Почему он не возвращается?"));
         System.out.println(neznaykaCharacter.hungerStiffle(newThoughts));
 
         GlobalTimeUpdater time = new GlobalTimeUpdater(currentTime,
                 neznaykaCharacter, shortyCharacterImpl, kozlikCharacterImpl,
-                shelterLocation, bridgeLocation, unknowLocation);
+                shelterLocation, bridgeLocation, unknownLocation);
 
         for (; currentTime.getCurrentTime() < Time.EVENING.getValue(); currentTime.addToCurrentTime(200)) {
             time.timeStep();
@@ -57,15 +57,13 @@ public class Story {
 
         Shorties manyShorties = new Shorties() {
 
-            private ArrayList<ICharacter> shorties = new ArrayList<ICharacter>();
-            private ITimeContainer currentTime;
-            private double ustalast = 0.0;
+            private ArrayList<ICharacter> shorties = new ArrayList<>();
             private boolean areSleeping = false;
 
             @Override
             public void timeUpdater(ITimeContainer currentTime) {
-                this.ustalast = Math.tanh(currentTime.getCurrentTime() * 3.5 - 2) * .5 + .6;
-                if (this.ustalast > .6 & !this.areSleeping) {
+                double fatigue = Math.tanh(currentTime.getCurrentTime() * 3.5 - 2) * .5 + .6;
+                if (fatigue > .6 & !this.areSleeping) {
                     for (ICharacter s : this.shorties) {
                         this.goSleeping(s);
                     }
@@ -75,11 +73,10 @@ public class Story {
 
             @Override
             public void setCurrentTime(ITimeContainer time) throws CharacterMovementException {
-                this.currentTime = time;
                 this.shorties = new ArrayList<>(
                         Arrays.asList(
-                                new Character("Миллиончик", shelterLocation, this.currentTime),
-                                new Character("Пузырь", shelterLocation, this.currentTime)));
+                                new Character("Миллиончик", shelterLocation, time),
+                                new Character("Пузырь", shelterLocation, time)));
             }
 
             @Override
@@ -102,10 +99,10 @@ public class Story {
 
         System.out.println("[STORYEND]");
 
-        System.out.println("Neznayka`s toString : " + neznaykaCharacter.toString());
+        System.out.println("Neznayka`s toString : " + neznaykaCharacter);
         System.out.println("Neznayka`s Hashcode " + neznaykaCharacter.hashCode());
 
-        System.out.println("Shelter`s toString : " + shelterLocation.toString());
+        System.out.println("Shelter`s toString : " + shelterLocation);
         System.out.println("Shelter`s Hashcode : " + shelterLocation.hashCode());
     }
 }

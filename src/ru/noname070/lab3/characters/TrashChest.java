@@ -1,7 +1,5 @@
 package ru.noname070.lab3.characters;
 
-import java.util.Random;
-
 public final class TrashChest {
 
     // Q: почему бы его не вынести в отдельный файл, в пакет types или enums
@@ -10,14 +8,7 @@ public final class TrashChest {
     public enum Trash {
         RUBBER_PILLOW,
         OLD_MATTRESS,
-        CLOTH;
-
-        private static Random rnd = new Random();
-
-        public static Trash getRandomTrash() {
-            Trash[] items = values();
-            return items[rnd.nextInt(items.length)];
-        }
+        CLOTH
     }
 
     private final Trash trashType;

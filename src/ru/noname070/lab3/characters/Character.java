@@ -1,6 +1,7 @@
 package ru.noname070.lab3.characters;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import ru.noname070.lab3.characters.dialog.*;
 import ru.noname070.lab3.entity.Entity;
@@ -48,19 +49,11 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter, IDi
         joinLocation(targetLocation);
         for (ICharacter suspectCharacter : targetLocation.getAllVisitors()) {
             if (suspectCharacter.equals(targetCharacter)) {
-                System.out.println(String.format("wow! %s succumbed that it`s a %s in %s", this.getName(),
-                        targetCharacter.getName(), targetCharacter.getName()));
+                System.out.printf("wow! %s succumbed that it`s a %s in %s%n", this.getName(),
+                        targetCharacter.getName(), targetCharacter.getName());
             } else
-                System.out.println(String.format("oh noo %s succumbed that it`s a %s in %s", this.getName(),
-                        suspectCharacter.getName(), targetLocation.getName()));
-        }
-    }
-
-    public void goLookingFor(ICharacter targetCharacter) {
-        for (ICharacter suspectCharacter : targetCharacter.getCurrentLocation().getAllVisitors()) {
-            System.out.println(
-                    suspectCharacter.equals(targetCharacter) ? "True" : "False");
-
+                System.out.printf("oh noo %s succumbed that it`s a %s in %s%n", this.getName(),
+                        suspectCharacter.getName(), targetLocation.getName());
         }
     }
 
@@ -96,7 +89,7 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter, IDi
 
     @Override
     public int hashCode() {
-        return (int) this.currnetLocation.getName().hashCode() * this.hungerScore
+        return this.currnetLocation.getName().hashCode() * this.hungerScore
                 * this.getThoughts().toString().hashCode() * this.getName().hashCode();
     }
 
@@ -118,30 +111,27 @@ public class Character extends Entity.TimeSlaveEntity implements ICharacter, IDi
             return false;
 
         Character otherCharacter = (Character) obj;
-        if (this.getName() != otherCharacter.getName())
+        if (!Objects.equals(this.getName(), otherCharacter.getName()))
             return false;
         if (this.getCurrentLocation() != otherCharacter.getCurrentLocation())
             return false;
         if (this.hungerScore != otherCharacter.hungerScore)
             return false;
-        if (this.thoughts != otherCharacter.thoughts)
-            return false;
-
-        return true;
+        return this.thoughts == otherCharacter.thoughts;
     }
 
     @Override
     public void say(String form, ICharacter target) {
-        System.out.println(String.format("%s say to %s : \"%s\"",
-                this.getName(), target.getName(), form));
+        System.out.printf("%s say to %s : \"%s\"%n",
+                this.getName(), target.getName(), form);
 
         ((IDialog) target).hear(form, this);
     }
 
     @Override
     public void hear(String form, ICharacter from) {
-        System.out.println(String.format("I (%s) hear this : \"%s\"\n",
-                this.getName(), form));
+        System.out.printf("I (%s) hear this : \"%s\"\n%n",
+                this.getName(), form);
     }
 
 }

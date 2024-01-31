@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import ru.noname070.lab3.characters.ICharacter;
 import ru.noname070.lab3.time.ITimeContainer;
 import ru.noname070.lab3.exceptions.*;
+
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class СharacterLocatableImpl extends Location implements ICharacterLocatable {
-    public СharacterLocatableImpl(String name, ITimeContainer currentTime) {
+public class CharacterLocatableImpl extends Location implements ICharacterLocatable {
+    public CharacterLocatableImpl(String name, ITimeContainer currentTime) {
         super(name, currentTime);
     }
 
-    public СharacterLocatableImpl(String name, ITimeContainer currentTime, double visibility_bias) {
+    public CharacterLocatableImpl(String name, ITimeContainer currentTime, double visibility_bias) {
         super(name, currentTime, visibility_bias);
     }
 
@@ -34,7 +36,7 @@ public class СharacterLocatableImpl extends Location implements ICharacterLocat
     public void joinCharacter(ICharacter c) throws CharacterMovementException {
         if (!visitors.contains(c)) {
             visitors.add(c);
-            System.out.println(String.format("now %s joint to %s", c.getName(), this.getName()));
+            System.out.printf("now %s joint to %s%n", c.getName(), this.getName());
 
         } else
             throw new CharacterMovementException(String.format("character %s can`t perform this move", c.getName()));
@@ -44,7 +46,7 @@ public class СharacterLocatableImpl extends Location implements ICharacterLocat
     public void leaveCharacter(ICharacter c) throws CharacterMovementException {
         if (visitors.contains(c)) {
             visitors.remove(c);
-            System.out.println(String.format("%s leaves from %s", c.getName(), this.getName()));
+            System.out.printf("%s leaves from %s%n", c.getName(), this.getName());
         } else
             throw new CharacterMovementException("character " + getName() + "cat`t perform this move");
 
@@ -59,7 +61,7 @@ public class СharacterLocatableImpl extends Location implements ICharacterLocat
     @Override
     public String toString() {
         String V = this.getAllVisitors().stream()
-                .map(v -> v.toString())
+                .map(Object::toString)
                 .collect(Collectors.joining(";\n"));
 
         return String.format("object CharacterLocatable; name:%s; currentTime:%s;\nvisitors: [ %s ]",
@@ -75,14 +77,12 @@ public class СharacterLocatableImpl extends Location implements ICharacterLocat
         if (this.getClass() != obj.getClass())
             return false;
 
-        СharacterLocatableImpl otherLocatable = (СharacterLocatableImpl) obj;
-        if (this.getName() != otherLocatable.getName())
+        CharacterLocatableImpl otherLocatable = (CharacterLocatableImpl) obj;
+        if (!Objects.equals(this.getName(), otherLocatable.getName()))
             return false;
         if (this.visitors != otherLocatable.visitors)
             return false;
-        if (this.getAllVisitors() != otherLocatable.getAllVisitors())
-            return false;
-        return true;
+        return this.getAllVisitors() == otherLocatable.getAllVisitors();
     }
 
 }

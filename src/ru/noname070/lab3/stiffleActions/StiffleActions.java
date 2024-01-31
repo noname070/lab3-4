@@ -7,7 +7,7 @@ public enum StiffleActions {
     PUZZLES("are making deals to stifle hunger"),
     PROVERBS("reminded of the proverbs to stifle hunger");
 
-    private String name;
+    private final String name;
 
     StiffleActions(String name) {
         this.name = name;
@@ -17,7 +17,7 @@ public enum StiffleActions {
         return this.name;
     }
 
-    private static Random rnd = new Random();
+    private static final Random rnd = new Random();
 
     public static StiffleActions getRandomAction() {
         StiffleActions[] actions = values();
