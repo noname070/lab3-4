@@ -82,7 +82,7 @@ public class CharacterLocatableImpl extends Location implements ICharacterLocata
             return false;
         if (this.visitors != otherLocatable.visitors)
             return false;
-        return this.getAllVisitors() == otherLocatable.getAllVisitors();
+        return this.getAllVisitors().equals(otherLocatable.getAllVisitors());
     }
 
 }
